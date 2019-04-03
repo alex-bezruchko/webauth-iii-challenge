@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
+const secret = require('./../config/secrets').jwtSecret;
 const Users = require('../users/users-model.js');
 
 // for endpoints beginning with /api/auth
@@ -8,7 +9,6 @@ router.post('/register', (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
   user.password = hash;
-
   Users.add(user)
     .then(saved => {
       res.status(201).json(saved);
@@ -36,5 +36,16 @@ router.post('/login', (req, res) => {
       res.status(500).json(error);
     });
 });
+
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username
+  }
+  const options = {
+    expiresIn: '1d',
+  }
+  return jwt.sign(payload, jwtSecret, options)
+}
 
 module.exports = router;
