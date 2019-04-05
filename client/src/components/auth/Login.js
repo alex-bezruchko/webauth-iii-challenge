@@ -6,18 +6,44 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 
 class Login extends React.Component {
+
+    state = {
+        username: "",
+        password: ""
+    }
+    handleInputChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+        console.log(this.state.username)
+
+    }
+    handleSubmit = e => {
+
+    }
     render() {
         return(
-            <Form noValidate>
-                <FormGroup controlId="formBasicEmail">
+            <Form noValidate onSubmit={this.handleSubmit}>
+                <h1 style={{textAlign: 'center' }}> Login </h1>
+                <FormGroup controlId="formBasicUsername">
                     <FormLabel>Email address</FormLabel>
-                    <FormControl type="email" placeholder="Enter email" />
+                    <FormControl 
+                        name="username"
+                        onChange={this.handleInputChange} 
+                        type="email" 
+                        placeholder="Enter username" 
+                    />
                     
                 </FormGroup>
 
                 <FormGroup controlId="formBasicPassword">
                     <FormLabel>Password</FormLabel>
-                    <FormControl type="password" placeholder="Password" />
+                    <FormControl 
+                        name="password"
+                        onChange={this.handleInputChange} 
+                        type="password" 
+                        placeholder="Password" 
+                    />
                 </FormGroup>
 
                 <Button variant="info" type="submit">
