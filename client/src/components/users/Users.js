@@ -2,17 +2,31 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
+import axios from 'axios';
 
 class Users extends React.Component {
+    
+    state = {
+        users: []
+    }
+    componentDidMount() {
+        const endpoint = 'http://localhost:5000/api/users/'
+        axios
+            .get(endpoint)
+            .then(res => {
+                this.setState({ users: res.data })
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
     render() {
         return (
             <Container>
                 <ListGroup>
-                    <ListGroupItem>Cras justo odio</ListGroupItem>
-                    <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                    <ListGroupItem>Morbi leo risus</ListGroupItem>
-                    <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
-                    <ListGroupItem>Vestibulum at eros</ListGroupItem>
+                    {this.state.users.map(u => {
+                        return <ListGroupItem key={u.id}>{u.username}</ListGroupItem>
+                    })}
                 </ListGroup>
             </Container>
         )       
