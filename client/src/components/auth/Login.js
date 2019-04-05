@@ -4,6 +4,7 @@ import FormLabel from 'react-bootstrap/FormLabel';
 import FormGroup from 'react-bootstrap/FormGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 class Login extends React.Component {
 
@@ -19,6 +20,16 @@ class Login extends React.Component {
 
     }
     handleSubmit = e => {
+        e.preventDefault();
+        const endpoint = 'http://localhost:5000/api/auth/login';
+        axios
+            .post(endpoint, this.state)
+            .then(res => {
+                localStorage.setItem('jwt', res.data.token)
+            })
+            .catch(e => {
+                console.log(e)
+            })
 
     }
     render() {
