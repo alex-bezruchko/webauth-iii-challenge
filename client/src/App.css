@@ -3,6 +3,11 @@
   justify-content: center;
   margin-top: 40px;
 }
+nav {
+  display: flex;
+  margin-top: 40px;
+  justify-content: center;
+}
 .list-group-item {
   margin-top: 40px;
   text-align: center;
