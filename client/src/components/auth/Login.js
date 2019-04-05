@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import { withRouter } from 'react-router-dom';
 import FormLabel from 'react-bootstrap/FormLabel';
 import FormGroup from 'react-bootstrap/FormGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -26,6 +27,7 @@ class Login extends React.Component {
             .post(endpoint, this.state)
             .then(res => {
                 localStorage.setItem('jwt', res.data.token)
+                this.props.history.push('/users')
             })
             .catch(e => {
                 console.log(e)
@@ -65,4 +67,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
